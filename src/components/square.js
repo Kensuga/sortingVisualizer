@@ -4,6 +4,9 @@ export default class square extends Component {
     setSize(){
         if(this.props.value > 0){
         return (this.props.value)
+        } 
+        if(this.props.value === 0){
+            return 1
         }
     }
 

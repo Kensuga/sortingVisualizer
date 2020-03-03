@@ -1,38 +1,61 @@
 import React, { Component } from 'react';
 import Square from './square'
 
-export default class Visualizer extends Component {
+class Visualizer extends Component {
     constructor(){
         super()
         this.state = {
-            matrix: this.createArray()
+            randomArray: this.createArray()
         }
     }
 
     createArray() {
-        let array = Array(2000).fill(1)
-        let arr = []
+        //Change Array Value for width
+        let array = Array(1750).fill()
         // Populates the array with numbers
         for(let i = 0; i < array.length; i++){
-                array[i] = <Square value = {i}/>
+            //Change the random value for height
+                array[i] = Math.floor(Math.random()*750)
         }
-
-        //Randomizes the array
-        while (array.length > 0) {
-            let r = Math.floor(Math.random()*array.length)
-            arr.push(array[r])
-            array.splice( r, 1)
-        }
-        return arr
+        return array
     }
 
+    bubbleSort() {
+        let arr = this.state.randomArray
+            for(let j = 0; j < 3; j++)
+            for(let i = 0;i < arr.length; i++){
+                if (arr[i] > arr[i+1]){
+                    let temp = arr[i]
+                    arr[i] = arr[i+1]
+                    arr[i+1] = temp
+                } else {
+                }
+            }
+            this.setState({ randomArray: arr })
+    }
 
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async bubbleLoop() {
+        for(let i = 0; i < this.state.randomArray.length/3; i++){
+            await this.sleep(10);
+            this.bubbleSort()
+        }
+    }
+    
     render(){
-        let organize = this.state.matrix.map(arr => <div className = "vertical">{arr}</div>)
+        let boxes = this.state.randomArray.map(value => <Square value = {value}/>)
         return (
-            <div className = "align">
-                { organize }
+            <div>
+                <div className = "align">
+                    { boxes }
+                </div>
+                <button onClick={() => this.bubbleLoop()}>Bubble Sort</button>
+                {/* <button onClick={() => this.selectionLoop()}>Selection Sort</button> */}
             </div>
         );
     }
 }
+export default Visualizer;
