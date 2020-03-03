@@ -1,0 +1,16 @@
+.box {
+  width: 5px;
+  height: 5px;
+  background-color: teal;
+  /* border: 1px solid black; */
+}
+
+.align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
